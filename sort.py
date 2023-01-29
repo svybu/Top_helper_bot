@@ -6,11 +6,13 @@ from sys import argv
 
 
 def normalize(file_name):
+    """Translate cyrillic symbols to latin"""
+    
     CYRILLIC_SYMBOLS = "абвгдеёжзийклмнопрстуфхцчшщъыьэюяєіїґ"
     TRANSLATION = (
         "a", "b", "v", "g", "d", "e", "e", "j", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "f",
         "h",
-        "ts", "ch", "sh", "sch", "", "y", "'", "e", "yu", "ya", "je", "i", "ji", "g")
+        "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ya", "je", "i", "ji", "g")
 
     TRANS = {}
     for c, l in zip(CYRILLIC_SYMBOLS, TRANSLATION):
@@ -28,7 +30,9 @@ def normalize(file_name):
     return clear_name
 
 
+
 def sort_files(my_path):
+    duplicate_counter = 0
 
     extensions = {
         "images": ['.jpeg', '.png', '.jpg', '.svg'],
@@ -46,7 +50,6 @@ def sort_files(my_path):
                    path.join(root, normalize(path.splitext(file)[0]) + path.splitext(file)[1]))
 
     filename = glob(fr"{my_path}\**\*", recursive=True)
-    used_names = []
     known_extensions = []
     unknown_extensions = []
 
@@ -75,18 +78,20 @@ def sort_files(my_path):
 
         if not path.exists(cr_path):
             mkdir(cr_path)
+
         try:
             move(file, cr_path)
         except Error:
-            if path.basename(file) in used_names:
-                new_name = path.splitext(file)[0] + "1" + path.splitext(file)[1]
-                rename(file, new_name)
-                move(new_name, cr_path)
-
-        used_names.append(path.basename(file))
-
+            duplicate_counter += 1
+            new_name = path.splitext(file)[0] + str(duplicate_counter) + path.splitext(file)[1]
+            rename(file, new_name)
+            move(new_name, cr_path)
+    
+    
+    '''Statistic about used extensions'''
     print(f"Known extensions: {known_extensions}")
-    print(f"Unknown extensions: {unknown_extensions}")
+    if len(unknown_extensions) > 0:
+        print(f"Unknown extensions: {unknown_extensions}")
 
     '''Deleting empty folders'''
     list_of_folders = list(walk(my_path))
