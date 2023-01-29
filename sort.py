@@ -10,7 +10,7 @@ def normalize(file_name):
     TRANSLATION = (
         "a", "b", "v", "g", "d", "e", "e", "j", "z", "i", "j", "k", "l", "m", "n", "o", "p", "r", "s", "t", "u", "f",
         "h",
-        "ts", "ch", "sh", "sch", "", "y", "", "e", "yu", "ya", "je", "i", "ji", "g")
+        "ts", "ch", "sh", "sch", "", "y", "'", "e", "yu", "ya", "je", "i", "ji", "g")
 
     TRANS = {}
     for c, l in zip(CYRILLIC_SYMBOLS, TRANSLATION):
@@ -95,24 +95,25 @@ def sort_files(my_path):
             rmdir(pathing)
 
     '''Unpacking archives'''
-    for archive in listdir(fr"{my_path}\archives"):
-        mkdir(fr"{my_path}\archives\{path.splitext(archive)[0]}")
-        extract_dir = fr"{my_path}\archives\{path.splitext(archive)[0]}"
-        with ZipFile(fr"{my_path}\archives\{archive}") as arch:
-            arch.extractall(extract_dir)
+    if path.exists(fr"{my_path}\archives"):
+        for archive in listdir(fr"{my_path}\archives"):
+            mkdir(fr"{my_path}\archives\{path.splitext(archive)[0]}")
+            extract_dir = fr"{my_path}\archives\{path.splitext(archive)[0]}"
+            with ZipFile(fr"{my_path}\archives\{archive}") as arch:
+                arch.extractall(extract_dir)
 
-        def renamed(dirpath, names, encoding):
-            new_names = [old.encode('cp437').decode(encoding) for old in names]
-            for old, new in zip(names, new_names):
-                rename(path.join(dirpath, old),
-                       path.join(dirpath, normalize(path.splitext(new)[0]) + path.splitext(new)[1]))
-            return new_names
+            def renamed(dirpath, names, encoding):
+                new_names = [old.encode('cp437').decode(encoding) for old in names]
+                for old, new in zip(names, new_names):
+                    rename(path.join(dirpath, old),
+                           path.join(dirpath, normalize(path.splitext(new)[0]) + path.splitext(new)[1]))
+                return new_names
 
-        encoding = 'cp866'
-        chdir(extract_dir)
-        for dirpath, dirs, files in walk(curdir, topdown=True):
-            renamed(dirpath, files, encoding)
-            dirs[:] = renamed(dirpath, dirs, encoding)
+            encoding = 'cp866'
+            chdir(extract_dir)
+            for dirpath, dirs, files in walk(curdir, topdown=True):
+                renamed(dirpath, files, encoding)
+                dirs[:] = renamed(dirpath, dirs, encoding)
 
     '''Counting files by extensions'''
     all_extensions = known_extensions + unknown_extensions
