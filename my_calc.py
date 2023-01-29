@@ -1,6 +1,5 @@
 from tkinter import *
 from tkinter import messagebox
-import tkinter
 
 my_calc = tkinter.Tk()
 
