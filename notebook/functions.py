@@ -1,6 +1,6 @@
 from classes import Note, df, synk, create_df
 from decorator import input_error
-from classes import to_memory
+from classes import save
 """*****************основна логіка роботи та функції*****************"""
 
 """*******вітання та відповідь на помилкові команди********"""
@@ -35,26 +35,26 @@ def parser_string(u_input):
 @input_error
 def add_note(args):
     df = create_df()
-    name = args[0]
+    name = str(args[0])
     if df['name'].isin([name]).any():
         raise FileExistsError
     else:
         ex_note = Note(name)
         ex_note.add_note()
-        to_memory()
+        save()
     return f'{ex_note.name.value} added'
 
 @input_error
 def change_note(args):
     synk()
     df = create_df()
-    name = args[0]
+    name = str(args[0])
     if df['name'].isin([name]).any() == False:
         raise FileNotFoundError
     else:
         ex_note = Note(name)
         ex_note.change_note()
-        to_memory()
+        save()
         return f'{ex_note.name.value} changed'
 
 @input_error
@@ -67,7 +67,7 @@ def remove_note(args):
     else:
         ex_note = Note(name)
         df = ex_note.remove()
-        to_memory()
+        save()
         return f'{ex_note.name.value} removed'
 
 @input_error
@@ -79,7 +79,7 @@ def add_tags(args):
         ex_note = Note(name)
         tags = input('Enter tags ')
         ex_note.add_tags(tags)
-        to_memory()
+        save()
     else:
         raise FileNotFoundError
     return f'added tags to {ex_note.name.value} '
@@ -92,7 +92,7 @@ def remove_tags(args):
     if df['name'].isin([name]).any():
         ex_note = Note(name)
         ex_note.delete_tags()
-        to_memory()
+        save()
     else:
         raise FileNotFoundError
     return f'removed tags to {ex_note.name.value} '

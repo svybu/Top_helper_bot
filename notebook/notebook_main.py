@@ -1,6 +1,6 @@
 from functions import parser_string, wrong_command
 from decorator import input_error
-from classes import synk
+from classes import synk, save
 
 
 @input_error
@@ -18,7 +18,7 @@ def main():
                 result = handler(*args)
                 print(result)
     finally:
-        print(" ")
+        save()
 
 
 if __name__ == '__main__':

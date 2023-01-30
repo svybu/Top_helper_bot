@@ -5,13 +5,13 @@ from pathlib import Path
 import pandas as pd
 
 
-def to_memory():
+def save():
     df.to_csv('df.csv', index=False, sep=';')
 def create_df():
     try:
         df = pd.read_csv('df.csv', delimiter=';')
     except FileNotFoundError:
-        df = pd.DataFrame(columns=['tags', 'name', 'created', 'changed'])
+        df = pd.DataFrame(columns=['tags', 'name', 'created', 'changed', 'note'])
     if os.path.exists('notes')==False:
         os.mkdir('notes')
     return df
@@ -19,6 +19,17 @@ def create_df():
 
 df = create_df()
 
+class Notebook(pd.DataFrame):
+    def add_note(self, note):
+        self.loc[len(self), ['name', 'created', 'note']] = [note.name.value, note.created, note]
+        save()
+    def change_note(self, note,changed=datetime.datetime.now().strftime('%m/%d/%Y, %H:%M')):
+        self.loc[df['name'] == note.name.value, ['changed']] = changed
+        save()
+
+    def remove_note(self, note):
+        self = self.loc[self['name'] != note.name.value]
+        save()
 
 class Field:
     def __init__(self, value):
@@ -110,8 +121,8 @@ def synk():
         if df['name'].isin([name]).any()==False:
             ex_note = Note(name)
             df.loc[len(df), ['name', 'created']] = [ex_note.name.value, ex_note.created]
-    to_memory()
+    save()
     df = df.loc[df['name'].isin(names)==True]
-    to_memory()
+    save()
 
 synk()
