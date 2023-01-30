@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# Top_Helper_Bot
-Project "Personal Assistant" with a command line interface
-=======
 # NoteBook
 
 NoteBook is a Python script for making text notes 
@@ -48,7 +44,3 @@ sort
 close
 good bye
 exit
-
-```
-
->>>>>>> 41e2acf (added tags, database on .csv file, filter and sort)
