@@ -1,0 +1,2 @@
+[console_scripts]
+topbot = top_helper_bot.menu:main_menu
