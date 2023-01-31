@@ -73,7 +73,7 @@ class Record:
     def add_email(self, email):
         self.emails.append(Email(email))
 
-    def change_phones(self, phones):
+    def change_phones(self, phones):     # -------------------------- проверить
         for phone in phones:
             self.add_phone(phone)
 
@@ -169,3 +169,10 @@ class AddressBook(UserDict):
 
 
 contacts = AddressBook()
+
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    main()

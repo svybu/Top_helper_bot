@@ -43,7 +43,7 @@ def sort_files(my_path):
     }
 
     '''Renaming files'''
-    for root, dirs, files in walk(my_path):
+    for root, dirs, files in walk(my_path):        
 
         for file in files:
             rename(path.join(root, file),
@@ -138,8 +138,9 @@ def sort_files(my_path):
 
 
 def main():
+    # ------------------------------- Demonytro 1 while и выбор путь или выход --------------
     try:
-        sort_files(argv[1])
+        sort_files(argv[1])           # -------- Demonytro 2  есть смысл обернуть проверкой  
     except IndexError:
         print("Please provide a path to a folder to be sorted")
 

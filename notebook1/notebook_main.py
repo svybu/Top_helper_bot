@@ -7,7 +7,7 @@ from classes import synk, save
 def main():
     try:
         while True:
-            u_input = input('Enter command ')
+            u_input = input('Enter command ')     # ---------   Добавить образцы команд   -------------
             handler, *args = parser_string(u_input)
             if handler == wrong_command:
                 print('Wrong command(')
