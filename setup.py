@@ -4,18 +4,18 @@ with open('README.md','r', encoding="utf-8") as readme:
     long_description = readme.read()
 
 setup(
-    name = 'Top Helper Bot',
-    version = '1.0.0',
+    name = 'Top-Helper-Bot',
+    version = '1.0.9',
     description = 'Project "Personal Assistant" with a command line interface',
     url = 'https://github.com/Demonytro/Top-Helper-Bot.git',
     author = 'QUATTRO Team',
-    long_description = 'Project "Personal Assistant" with a command line interface',
+    long_description = long_description,
     classifiers = [
-        'Programming Language :: Python :: 3',
-        'Operating System :: Windows',
-        'License :: MIT License'
+        "Programming Language :: Python :: 3",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent"
     ],
     packages = find_namespace_packages(),
-    install_requires = ["requests"],
+    # install_requires = ["requests"],
     entry_points = {'console_scripts': ['topbot = top_helper_bot.menu:main_menu']}
 )

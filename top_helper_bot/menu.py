@@ -1,10 +1,9 @@
 """Menu"""
 
-from my_calc import main as my_calc_main               #----почему при старте запускается--- как запустить
-from sort import main as sort_main                      #------ как передать путь
-# from notebook1.notebook_main import main as nb_main     #----- init.py
-from note_ex import main as nb_main                      # ---------  образцы команд
-from contacts_book_classes import main as ab_main        # ----------- нет основной логики и команд
+from .my_calc import main as my_calc_main               #----почему при старте запускается--- как запустить
+from .sort import main as sort_main                      #------ как передать путь
+from .notebook1.notebook_main import run as nb_main     #----- init.py ---------  образцы команд
+from .contacts_book_classes import main as ab_main        # ----------- нет основной логики и команд
 
 
 
@@ -23,7 +22,6 @@ def main_menu():
             print('Finish NoteBook application')
         elif user_input == "3":    # 3 - FileSorter
             print('Start FileSorter application')
-# ------------------------------------------------  argv[1] =  file_path = input("input folder path")
             sort_main()
             print('Finish FileSorter application')
             pass

@@ -1,6 +1,6 @@
-from functions import parser_string, wrong_command
-from decorator import input_error
-from classes import synk, save
+from .functions import parser_string, wrong_command
+from .decorator import input_error
+from .classes import synk, save
 
 
 @input_error
@@ -20,8 +20,10 @@ def main():
     finally:
         save()
 
-
-if __name__ == '__main__':
+def run():
     synk()
     print('Welcome to NoteBook')
     main()
+
+if __name__ == '__main__':
+    run()
